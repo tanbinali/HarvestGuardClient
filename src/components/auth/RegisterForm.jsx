@@ -171,7 +171,7 @@ export const RegisterForm = () => {
             <Input
               label={t("auth.firstName")}
               type="text"
-              name={t("firstName")}
+              name="first_name"
               placeholder={t("auth.firstName")}
               value={formData.first_name}
               onChange={handleChange}
