@@ -1,28 +1,37 @@
-import { motion } from 'framer-motion'
-import { Home, LayoutDashboard, Wheat, Award, User, LogOut, Menu, X } from 'lucide-react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import useAuthStore from '../../stores/authStore'
-import useTranslation from '../../hooks/useTranslation'
-import { LanguageToggleDark } from './LanguageToggle'
+import { motion } from "framer-motion";
+import {
+  Home,
+  LayoutDashboard,
+  Wheat,
+  Award,
+  User,
+  LogOut,
+  Menu,
+  X,
+} from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import useAuthStore from "../../stores/authStore";
+import useTranslation from "../../hooks/useTranslation";
+import { LanguageToggleDark } from "./LanguageToggle";
 
 const navItems = [
-  { key: 'dashboard', icon: LayoutDashboard, path: '/dashboard' },
-  { key: 'crops', icon: Wheat, path: '/crops' },
-  { key: 'achievements', icon: Award, path: '/achievements' },
-  { key: 'profile', icon: User, path: '/profile' }
-]
+  { key: "dashboard", icon: LayoutDashboard, path: "/dashboard" },
+  { key: "crops", icon: Wheat, path: "/crops" },
+  { key: "achievements", icon: Award, path: "/achievements" },
+  { key: "profile", icon: User, path: "/profile" },
+];
 
 export const Navbar = () => {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
-  const { logout, user } = useAuthStore()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { logout, user } = useAuthStore();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
+    logout();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -30,11 +39,11 @@ export const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <NavLink to="/dashboard" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-10 h-10 bg-linear-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Wheat className="w-5 h-5 text-white" />
               </div>
               <span className="font-bold text-xl text-gray-900 hidden sm:block">
-                {t('app.name')}
+                {t("app.name")}
               </span>
             </NavLink>
 
@@ -45,9 +54,10 @@ export const Navbar = () => {
                   to={item.path}
                   className={({ isActive }) => `
                     flex items-center gap-2 px-4 py-2 rounded-xl transition-all
-                    ${isActive 
-                      ? 'bg-emerald-100 text-emerald-700 font-semibold' 
-                      : 'text-gray-600 hover:bg-gray-100'
+                    ${
+                      isActive
+                        ? "bg-emerald-100 text-emerald-700 font-semibold"
+                        : "text-gray-600 hover:bg-gray-100"
                     }
                   `}
                 >
@@ -59,7 +69,7 @@ export const Navbar = () => {
 
             <div className="flex items-center gap-4">
               <LanguageToggleDark />
-              
+
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -73,7 +83,11 @@ export const Navbar = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="md:hidden p-2 rounded-lg hover:bg-gray-100"
               >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
               </button>
             </div>
           </div>
@@ -96,9 +110,10 @@ export const Navbar = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className={({ isActive }) => `
                     flex items-center gap-3 px-4 py-4 rounded-xl transition-all
-                    ${isActive 
-                      ? 'bg-emerald-100 text-emerald-700 font-semibold' 
-                      : 'text-gray-600 hover:bg-gray-100'
+                    ${
+                      isActive
+                        ? "bg-emerald-100 text-emerald-700 font-semibold"
+                        : "text-gray-600 hover:bg-gray-100"
                     }
                   `}
                 >
@@ -106,20 +121,20 @@ export const Navbar = () => {
                   <span className="text-lg">{t(`nav.${item.key}`)}</span>
                 </NavLink>
               ))}
-              
+
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-3 px-4 py-4 w-full text-left text-red-600 hover:bg-red-50 rounded-xl transition-colors"
               >
                 <LogOut className="w-6 h-6" />
-                <span className="text-lg">{t('profile.logout')}</span>
+                <span className="text-lg">{t("profile.logout")}</span>
               </button>
             </div>
           </div>
         </motion.div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

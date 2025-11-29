@@ -1,16 +1,23 @@
-import { motion } from 'framer-motion'
-import { Wheat, MapPin, Calendar, Package, ChevronRight, Trash2 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
-import useTranslation from '../../hooks/useTranslation'
+import { motion } from "framer-motion";
+import {
+  Wheat,
+  MapPin,
+  Calendar,
+  Package,
+  ChevronRight,
+  Trash2,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import useTranslation from "../../hooks/useTranslation";
 
 export const CropBatchCard = ({ batch, onDelete }) => {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const statusColors = {
-    ACTIVE: 'bg-green-100 text-green-700',
-    COMPLETED: 'bg-gray-100 text-gray-700'
-  }
+    ACTIVE: "bg-green-100 text-green-700",
+    COMPLETED: "bg-gray-100 text-gray-700",
+  };
 
   return (
     <motion.div
@@ -21,7 +28,7 @@ export const CropBatchCard = ({ batch, onDelete }) => {
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
+          <div className="w-12 h-12 bg-linear-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
             <Wheat className="w-6 h-6 text-white" />
           </div>
           <div>
@@ -31,7 +38,11 @@ export const CropBatchCard = ({ batch, onDelete }) => {
             <p className="text-sm text-gray-500">{batch.estimated_weight} kg</p>
           </div>
         </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColors[batch.status]}`}>
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            statusColors[batch.status]
+          }`}
+        >
           {t(`crops.${batch.status.toLowerCase()}`)}
         </span>
       </div>
@@ -56,24 +67,25 @@ export const CropBatchCard = ({ batch, onDelete }) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={(e) => {
-            e.stopPropagation()
-            onDelete?.(batch.id)
+            e.stopPropagation();
+            onDelete?.(batch.id);
           }}
           className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
         >
           <Trash2 className="w-5 h-5" />
         </motion.button>
-        <motion.button
+        {/* <motion.button
+          type="button"
           whileHover={{ x: 5 }}
           onClick={() => navigate(`/crops/${batch.id}`)}
           className="flex items-center gap-2 text-emerald-600 font-semibold text-sm hover:text-emerald-700"
         >
           View Details
           <ChevronRight className="w-4 h-4" />
-        </motion.button>
+        </motion.button> */}
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default CropBatchCard
+export default CropBatchCard;

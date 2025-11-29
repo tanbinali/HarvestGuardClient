@@ -1,38 +1,45 @@
-import { motion } from 'framer-motion'
-import { Wheat, Leaf, CheckCircle } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import RegisterForm from '../components/auth/RegisterForm'
-import { LanguageToggle } from '../components/common/LanguageToggle'
-import useTranslation from '../hooks/useTranslation'
+import { motion } from "framer-motion";
+import { Wheat, Leaf, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import RegisterForm from "../components/auth/RegisterForm";
+import { LanguageToggle } from "../components/common/LanguageToggle";
+import useTranslation from "../hooks/useTranslation";
 
 const benefits = [
-  { key: 'track', text: 'Track all your crop batches in one place' },
-  { key: 'alert', text: 'Get early warnings about potential risks' },
-  { key: 'achieve', text: 'Earn achievements as you protect crops' },
-  { key: 'offline', text: 'Works offline - sync when connected' }
-]
+  { key: "track", text: "Track all your crop batches in one place" },
+  { key: "alert", text: "Get early warnings about potential risks" },
+  { key: "achieve", text: "Earn achievements as you protect crops" },
+  { key: "offline", text: "Works offline - sync when connected" },
+];
 
 export const RegisterPage = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen flex">
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-emerald-600 via-green-600 to-emerald-700 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-emerald-600 via-green-600 to-emerald-700 relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
+            backgroundSize: "40px 40px",
+          }}
+        />
 
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ y: -100, opacity: 0 }}
-            animate={{ 
+            animate={{
               y: [null, 800],
-              opacity: [0, 1, 1, 0]
+              opacity: [0, 1, 1, 0],
             }}
-            transition={{ 
+            transition={{
               duration: 15 + Math.random() * 10,
               delay: i * 1.5,
               repeat: Infinity,
-              ease: 'linear'
+              ease: "linear",
             }}
             style={{ left: `${10 + i * 12}%` }}
             className="absolute text-white/20"
@@ -51,9 +58,9 @@ export const RegisterPage = () => {
             <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-8">
               <Wheat className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-4xl font-bold mb-4">{t('app.name')}</h1>
+            <h1 className="text-4xl font-bold mb-4">{t("app.name")}</h1>
             <p className="text-xl text-white/80 max-w-md mb-8">
-              {t('app.tagline')}
+              {t("app.tagline")}
             </p>
 
             <div className="space-y-4 text-left">
@@ -82,9 +89,11 @@ export const RegisterPage = () => {
             <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
               <Wheat className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-xl text-gray-900">{t('app.name')}</span>
+            <span className="font-bold text-xl text-gray-900">
+              {t("app.name")}
+            </span>
           </Link>
-          <LanguageToggle className="!bg-emerald-100 !text-emerald-700 !border-emerald-200" />
+          <LanguageToggle className="bg-emerald-100! text-emerald-700! border-emerald-200!" />
         </div>
 
         <div className="flex-1 flex items-center justify-center p-6">
@@ -95,11 +104,9 @@ export const RegisterPage = () => {
           >
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                {t('auth.register')}
+                {t("auth.register")}
               </h2>
-              <p className="text-gray-600">
-                Start protecting your harvest today
-              </p>
+              <p className="text-gray-600">{t("auth.register_bottom")}</p>
             </div>
 
             <RegisterForm />
@@ -107,7 +114,7 @@ export const RegisterPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;

@@ -1,26 +1,26 @@
-import { motion } from 'framer-motion'
-import { WifiOff, Smartphone, Gift, Award } from 'lucide-react'
-import useTranslation from '../../hooks/useTranslation'
+import { motion } from "framer-motion";
+import { WifiOff, Smartphone, Gift, Award } from "lucide-react";
+import useTranslation from "../../hooks/useTranslation";
 
 const features = [
-  { key: 'offline', icon: WifiOff, gradient: 'from-blue-500 to-indigo-500' },
-  { key: 'simple', icon: Smartphone, gradient: 'from-emerald-500 to-teal-500' },
-  { key: 'free', icon: Gift, gradient: 'from-pink-500 to-rose-500' },
-  { key: 'badges', icon: Award, gradient: 'from-amber-500 to-orange-500' }
-]
+  { key: "offline", icon: WifiOff, gradient: "from-blue-500 to-indigo-500" },
+  { key: "simple", icon: Smartphone, gradient: "from-emerald-500 to-teal-500" },
+  { key: "free", icon: Gift, gradient: "from-pink-500 to-rose-500" },
+  { key: "badges", icon: Award, gradient: "from-amber-500 to-orange-500" },
+];
 
 export const FeaturesSection = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+    <section className="py-20 bg-linear-to-b from-gray-50 to-white relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0, x: -200 }}
         whileInView={{ opacity: 0.1, x: 0 }}
         viewport={{ once: true }}
         className="absolute left-0 top-1/2 -translate-y-1/2 text-[300px] font-black text-emerald-500 leading-none pointer-events-none"
       >
-        WHY
+        {t("landing.background_text")}
       </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -31,7 +31,7 @@ export const FeaturesSection = () => {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-            {t('landing.features.title')}
+            {t("landing.features.title")}
           </h2>
         </motion.div>
 
@@ -51,8 +51,8 @@ export const FeaturesSection = () => {
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.2 + index * 0.15, type: 'spring' }}
-                  className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                  transition={{ delay: 0.2 + index * 0.15, type: "spring" }}
+                  className={`w-16 h-16 bg-linear-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
                 >
                   <feature.icon className="w-8 h-8 text-white" />
                 </motion.div>
@@ -65,9 +65,9 @@ export const FeaturesSection = () => {
                 </p>
 
                 <motion.div
-                  initial={{ x: '-100%' }}
+                  initial={{ x: "-100%" }}
                   whileHover={{ x: 0 }}
-                  className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.gradient}`}
+                  className={`absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r ${feature.gradient}`}
                 />
               </div>
             </motion.div>
@@ -75,7 +75,7 @@ export const FeaturesSection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default FeaturesSection
+export default FeaturesSection;

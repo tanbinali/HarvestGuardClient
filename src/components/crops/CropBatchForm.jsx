@@ -1,92 +1,96 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Wheat, Scale, Calendar, MapPin, Package, Loader2 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
-import { cropsAPI } from '../../services/api'
-import useOfflineStore from '../../stores/offlineStore'
-import useOnlineStatus from '../../hooks/useOnlineStatus'
-import useTranslation from '../../hooks/useTranslation'
-import Input from '../common/Input'
-import Select from '../common/Select'
-import Button from '../common/Button'
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Wheat, Scale, Calendar, MapPin, Package, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { cropsAPI } from "../../services/api";
+import useOfflineStore from "../../stores/offlineStore";
+import useOnlineStatus from "../../hooks/useOnlineStatus";
+import useTranslation from "../../hooks/useTranslation";
+import Input from "../common/Input";
+import Select from "../common/Select";
+import Button from "../common/Button";
 
 export const CropBatchForm = ({ initialData, onSuccess }) => {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
-  const { isOnline } = useOnlineStatus()
-  const { addPendingAction, addToCache } = useOfflineStore()
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { isOnline } = useOnlineStatus();
+  const { addPendingAction, addToCache } = useOfflineStore();
 
   const [formData, setFormData] = useState({
-    crop_type: initialData?.crop_type || 'PADDY',
-    estimated_weight: initialData?.estimated_weight || '',
-    harvest_date: initialData?.harvest_date || new Date().toISOString().split('T')[0],
-    storage_location: initialData?.storage_location || '',
-    storage_type: initialData?.storage_type || '',
-    notes: initialData?.notes || ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+    crop_type: initialData?.crop_type || "PADDY",
+    estimated_weight: initialData?.estimated_weight || "",
+    harvest_date:
+      initialData?.harvest_date || new Date().toISOString().split("T")[0],
+    storage_location: initialData?.storage_location || "",
+    storage_type: initialData?.storage_type || "",
+    notes: initialData?.notes || "",
+  });
 
-  const cropTypes = [
-    { value: 'PADDY', label: t('crops.types.PADDY') }
-  ]
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const cropTypes = [{ value: "PADDY", label: t("crops.types.PADDY") }];
 
   const storageTypes = [
-    { value: 'JUTE_BAG', label: t('crops.storage.JUTE_BAG') },
-    { value: 'SILO', label: t('crops.storage.SILO') },
-    { value: 'OPEN_AREA', label: t('crops.storage.OPEN_AREA') }
-  ]
+    { value: "JUTE_BAG", label: t("crops.storage.JUTE_BAG") },
+    { value: "SILO", label: t("crops.storage.SILO") },
+    { value: "OPEN_AREA", label: t("crops.storage.OPEN_AREA") },
+  ];
 
   const locations = [
-    { value: 'DHAKA', label: t('crops.locations.DHAKA') },
-    { value: 'CHITTAGONG', label: t('crops.locations.CHITTAGONG') },
-    { value: 'SYLHET', label: t('crops.locations.SYLHET') },
-    { value: 'RAJSHAHI', label: t('crops.locations.RAJSHAHI') },
-    { value: 'KHULNA', label: t('crops.locations.KHULNA') },
-    { value: 'BARISHAL', label: t('crops.locations.BARISHAL') },
-    { value: 'RANGPUR', label: t('crops.locations.RANGPUR') },
-    { value: 'MYMENSINGH', label: t('crops.locations.MYMENSINGH') }
-  ]
+    { value: "DHAKA", label: t("crops.locations.DHAKA") },
+    { value: "CHITTAGONG", label: t("crops.locations.CHITTAGONG") },
+    { value: "SYLHET", label: t("crops.locations.SYLHET") },
+    { value: "RAJSHAHI", label: t("crops.locations.RAJSHAHI") },
+    { value: "KHULNA", label: t("crops.locations.KHULNA") },
+    { value: "BARISHAL", label: t("crops.locations.BARISHAL") },
+    { value: "RANGPUR", label: t("crops.locations.RANGPUR") },
+    { value: "MYMENSINGH", label: t("crops.locations.MYMENSINGH") },
+  ];
 
+  // Handles normal text/number/date inputs
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-    setError('')
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setError("");
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     const batchData = {
       ...formData,
-      estimated_weight: parseFloat(formData.estimated_weight)
-    }
+      estimated_weight: parseFloat(formData.estimated_weight),
+    };
 
     try {
       if (isOnline) {
-        const response = await cropsAPI.create(batchData)
-        onSuccess?.(response.data)
-        navigate('/crops')
+        const response = await cropsAPI.create(batchData);
+        onSuccess?.(response.data);
+        navigate("/crops");
       } else {
         const tempBatch = {
           ...batchData,
           id: `temp-${Date.now()}`,
-          status: 'ACTIVE',
+          status: "ACTIVE",
           created_at: new Date().toISOString(),
-          _isOffline: true
-        }
-        addToCache('batches', tempBatch)
-        addPendingAction({ type: 'CREATE_BATCH', data: batchData })
-        navigate('/crops')
+          _isOffline: true,
+        };
+        addToCache("batches", tempBatch);
+        addPendingAction({ type: "CREATE_BATCH", data: batchData });
+        navigate("/crops");
       }
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to create batch. Please try again.')
+      setError(
+        err.response?.data?.detail ||
+          "Failed to create batch. Please try again."
+      );
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <motion.form
@@ -106,7 +110,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
       )}
 
       <Select
-        label={t('crops.cropType')}
+        label={t("crops.cropType")}
         name="crop_type"
         value={formData.crop_type}
         onChange={handleChange}
@@ -116,7 +120,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
       />
 
       <Input
-        label={t('crops.weight')}
+        label={t("crops.weight")}
         type="number"
         name="estimated_weight"
         placeholder="e.g., 500"
@@ -129,7 +133,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
       />
 
       <Input
-        label={t('crops.harvestDate')}
+        label={t("crops.harvestDate")}
         type="date"
         name="harvest_date"
         value={formData.harvest_date}
@@ -139,7 +143,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
       />
 
       <Select
-        label={t('crops.storageLocation')}
+        label={t("crops.storageLocation")}
         name="storage_location"
         value={formData.storage_location}
         onChange={handleChange}
@@ -150,7 +154,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
       />
 
       <Select
-        label={t('crops.storageType')}
+        label={t("crops.storageType")}
         name="storage_type"
         value={formData.storage_type}
         onChange={handleChange}
@@ -161,7 +165,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
       />
 
       <Input
-        label={t('crops.notes')}
+        label={t("crops.notes")}
         type="text"
         name="notes"
         placeholder="Any additional notes..."
@@ -170,24 +174,24 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
       />
 
       <div className="flex gap-4 pt-4">
-        <Button 
-          type="button" 
-          variant="secondary" 
+        <Button
+          type="button"
+          variant="secondary"
           fullWidth
-          onClick={() => navigate('/crops')}
+          onClick={() => navigate("/crops")}
         >
-          {t('common.cancel')}
+          {t("common.cancel")}
         </Button>
-        <Button 
-          type="submit" 
-          fullWidth
-          loading={loading}
-        >
-          {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('common.save')}
+        <Button type="submit" fullWidth loading={loading}>
+          {loading ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            t("common.save")
+          )}
         </Button>
       </div>
     </motion.form>
-  )
-}
+  );
+};
 
-export default CropBatchForm
+export default CropBatchForm;

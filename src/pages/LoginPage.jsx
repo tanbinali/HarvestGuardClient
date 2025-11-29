@@ -1,31 +1,38 @@
-import { motion } from 'framer-motion'
-import { Wheat, Leaf } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import LoginForm from '../components/auth/LoginForm'
-import { LanguageToggle } from '../components/common/LanguageToggle'
-import useTranslation from '../hooks/useTranslation'
+import { motion } from "framer-motion";
+import { Wheat, Leaf } from "lucide-react";
+import { Link } from "react-router-dom";
+import LoginForm from "../components/auth/LoginForm";
+import { LanguageToggle } from "../components/common/LanguageToggle";
+import useTranslation from "../hooks/useTranslation";
 
 export const LoginPage = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen flex">
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-emerald-600 via-green-600 to-emerald-700 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        
+      <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-emerald-600 via-green-600 to-emerald-700 relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ y: -100, opacity: 0 }}
-            animate={{ 
+            animate={{
               y: [null, 800],
-              opacity: [0, 1, 1, 0]
+              opacity: [0, 1, 1, 0],
             }}
-            transition={{ 
+            transition={{
               duration: 15 + Math.random() * 10,
               delay: i * 1.5,
               repeat: Infinity,
-              ease: 'linear'
+              ease: "linear",
             }}
             style={{ left: `${10 + i * 12}%` }}
             className="absolute text-white/20"
@@ -44,10 +51,8 @@ export const LoginPage = () => {
             <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-8">
               <Wheat className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-4xl font-bold mb-4">{t('app.name')}</h1>
-            <p className="text-xl text-white/80 max-w-md">
-              {t('app.tagline')}
-            </p>
+            <h1 className="text-4xl font-bold mb-4">{t("app.name")}</h1>
+            <p className="text-xl text-white/80 max-w-md">{t("app.tagline")}</p>
           </motion.div>
         </div>
       </div>
@@ -58,9 +63,11 @@ export const LoginPage = () => {
             <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
               <Wheat className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-xl text-gray-900">{t('app.name')}</span>
+            <span className="font-bold text-xl text-gray-900">
+              {t("app.name")}
+            </span>
           </Link>
-          <LanguageToggle className="!bg-emerald-100 !text-emerald-700 !border-emerald-200" />
+          <LanguageToggle className="bg-emerald-100! text-emerald-700! border-emerald-200!" />
         </div>
 
         <div className="flex-1 flex items-center justify-center p-6">
@@ -71,7 +78,7 @@ export const LoginPage = () => {
           >
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                {t('auth.login')}
+                {t("auth.login")}
               </h2>
               <p className="text-gray-600">
                 Welcome back! Please enter your details.
@@ -83,7 +90,7 @@ export const LoginPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

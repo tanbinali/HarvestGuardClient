@@ -1,83 +1,93 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Mail, Lock, Phone, User, Loader2 } from 'lucide-react'
-import { useNavigate, Link } from 'react-router-dom'
-import { authAPI } from '../../services/api'
-import useAuthStore from '../../stores/authStore'
-import useTranslation from '../../hooks/useTranslation'
-import Input from '../common/Input'
-import Button from '../common/Button'
-import Select from '../common/Select'
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Lock, Phone, User, Loader2 } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { authAPI } from "../../services/api";
+import useAuthStore from "../../stores/authStore";
+import useTranslation from "../../hooks/useTranslation";
+import Input from "../common/Input";
+import Button from "../common/Button";
+import Select from "../common/Select";
 
 export const RegisterForm = () => {
-  const { t, language } = useTranslation()
-  const navigate = useNavigate()
-  const { login } = useAuthStore()
-  
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone_number: '',
-    first_name: '',
-    last_name: '',
-    preferred_language: language,
-    username: ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [step, setStep] = useState(1)
+  const { t, language } = useTranslation();
+  const navigate = useNavigate();
+  const { login } = useAuthStore();
 
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone_number: "",
+    first_name: "",
+    last_name: "",
+    preferred_language: language,
+    username: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [step, setStep] = useState(1);
+
+  // Handle normal inputs like text, email, password
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-    setError('')
-    
-    if (name === 'email') {
-      setFormData(prev => ({ ...prev, username: value.split('@')[0] }))
-    }
-  }
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+      ...(name === "email" ? { username: value.split("@")[0] } : {}),
+    }));
+
+    setError("");
+  };
+
+  // Handle language select
+  const handleLanguageChange = (e) => {
+    const value = e.target ? e.target.value : e;
+
+    setFormData((prev) => ({ ...prev, preferred_language: value }));
+    setError("");
+  };
 
   const validateStep1 = () => {
     if (!formData.first_name || !formData.last_name) {
-      setError('Please enter your name')
-      return false
+      setError("Please enter your name");
+      return false;
     }
     if (!formData.phone_number) {
-      setError('Please enter your phone number')
-      return false
+      setError("Please enter your phone number");
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
   const validateStep2 = () => {
     if (!formData.email) {
-      setError('Please enter your email')
-      return false
+      setError("Please enter your email");
+      return false;
     }
     if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters')
-      return false
+      setError("Password must be at least 8 characters");
+      return false;
     }
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      return false
+      setError("Passwords do not match");
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
   const handleNext = () => {
-    if (validateStep1()) {
-      setStep(2)
-    }
-  }
+    if (validateStep1()) setStep(2);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!validateStep2()) return
+    e.preventDefault();
+    if (!validateStep2()) return;
 
-    setLoading(true)
-    setError('')
+    setLoading(true);
+    setError("");
 
     try {
       const registerData = {
@@ -87,34 +97,41 @@ export const RegisterForm = () => {
         first_name: formData.first_name,
         last_name: formData.last_name,
         preferred_language: formData.preferred_language,
-        username: formData.username || formData.email.split('@')[0]
-      }
-      
-      await authAPI.register(registerData)
-      
+        username: formData.username || formData.email.split("@")[0],
+      };
+
+      await authAPI.register(registerData);
+
       const loginResponse = await authAPI.login({
         email: formData.email,
-        password: formData.password
-      })
-      const { access, refresh } = loginResponse.data
-      
-      const profileResponse = await authAPI.getProfile()
-      const user = profileResponse.data
-      
-      login(user, access, refresh)
-      navigate('/dashboard')
+        password: formData.password,
+      });
+
+      const { access, refresh } = loginResponse.data;
+
+      // Set tokens in your store immediately
+      login(null, access, refresh); // you can pass null for user for now
+
+      // Now fetch profile with valid token
+      const profileResponse = await authAPI.getProfile();
+      const user = profileResponse.data;
+
+      // Update store with actual user
+      login(user, access, refresh);
+
+      navigate("/dashboard");
     } catch (err) {
-      const errorData = err.response?.data
+      const errorData = err.response?.data;
       if (errorData) {
-        const errorMessage = Object.values(errorData).flat().join('. ')
-        setError(errorMessage || 'Registration failed. Please try again.')
+        const errorMessage = Object.values(errorData).flat().join(". ");
+        setError(errorMessage || "Registration failed. Please try again.");
       } else {
-        setError('Registration failed. Please try again.')
+        setError("Registration failed. Please try again.");
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <motion.form
@@ -128,7 +145,7 @@ export const RegisterForm = () => {
           <div
             key={s}
             className={`w-16 h-2 rounded-full transition-all ${
-              s <= step ? 'bg-emerald-500' : 'bg-gray-200'
+              s <= step ? "bg-emerald-500" : "bg-gray-200"
             }`}
           />
         ))}
@@ -152,7 +169,7 @@ export const RegisterForm = () => {
         >
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label={t('auth.firstName')}
+              label={t("auth.firstName")}
               type="text"
               name="first_name"
               placeholder="First name"
@@ -162,7 +179,7 @@ export const RegisterForm = () => {
               required
             />
             <Input
-              label={t('auth.lastName')}
+              label={t("auth.lastName")}
               type="text"
               name="last_name"
               placeholder="Last name"
@@ -173,7 +190,7 @@ export const RegisterForm = () => {
           </div>
 
           <Input
-            label={t('auth.phone')}
+            label={t("auth.phone")}
             type="tel"
             name="phone_number"
             placeholder="+880 1XXX XXXXXX"
@@ -184,18 +201,18 @@ export const RegisterForm = () => {
           />
 
           <Select
-            label={t('profile.language')}
+            label={t("profile.language")}
             name="preferred_language"
             value={formData.preferred_language}
-            onChange={handleChange}
+            onChange={handleLanguageChange}
             options={[
-              { value: 'EN', label: 'English' },
-              { value: 'BN', label: 'বাংলা (Bangla)' }
+              { value: "EN", label: "English" },
+              { value: "BN", label: "বাংলা (Bangla)" },
             ]}
           />
 
           <Button type="button" fullWidth size="lg" onClick={handleNext}>
-            {t('common.next')}
+            {t("common.next")}
           </Button>
         </motion.div>
       ) : (
@@ -205,7 +222,7 @@ export const RegisterForm = () => {
           className="space-y-4"
         >
           <Input
-            label={t('auth.email')}
+            label={t("auth.email")}
             type="email"
             name="email"
             placeholder="farmer@example.com"
@@ -216,7 +233,7 @@ export const RegisterForm = () => {
           />
 
           <Input
-            label={t('auth.password')}
+            label={t("auth.password")}
             type="password"
             name="password"
             placeholder="••••••••"
@@ -227,7 +244,7 @@ export const RegisterForm = () => {
           />
 
           <Input
-            label={t('auth.confirmPassword')}
+            label={t("auth.confirmPassword")}
             type="password"
             name="confirmPassword"
             placeholder="••••••••"
@@ -238,35 +255,37 @@ export const RegisterForm = () => {
           />
 
           <div className="flex gap-4">
-            <Button 
-              type="button" 
-              variant="secondary" 
-              fullWidth 
+            <Button
+              type="button"
+              variant="secondary"
+              fullWidth
               size="lg"
               onClick={() => setStep(1)}
             >
-              {t('common.back')}
+              {t("common.back")}
             </Button>
-            <Button 
-              type="submit" 
-              fullWidth 
-              size="lg"
-              loading={loading}
-            >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('auth.register')}
+            <Button type="submit" fullWidth size="lg" loading={loading}>
+              {loading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                t("auth.register")
+              )}
             </Button>
           </div>
         </motion.div>
       )}
 
       <p className="text-center text-gray-600">
-        {t('auth.hasAccount')}{' '}
-        <Link to="/login" className="text-emerald-600 font-semibold hover:text-emerald-700">
-          {t('auth.login')}
+        {t("auth.hasAccount")}{" "}
+        <Link
+          to="/login"
+          className="text-emerald-600 font-semibold hover:text-emerald-700"
+        >
+          {t("auth.login")}
         </Link>
       </p>
     </motion.form>
-  )
-}
+  );
+};
 
-export default RegisterForm
+export default RegisterForm;

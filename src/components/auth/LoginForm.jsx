@@ -1,50 +1,59 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Mail, Lock, Loader2 } from 'lucide-react'
-import { useNavigate, Link } from 'react-router-dom'
-import { authAPI } from '../../services/api'
-import useAuthStore from '../../stores/authStore'
-import useTranslation from '../../hooks/useTranslation'
-import Input from '../common/Input'
-import Button from '../common/Button'
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Lock, Loader2 } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { authAPI } from "../../services/api";
+import useAuthStore from "../../stores/authStore";
+import useTranslation from "../../hooks/useTranslation";
+import Input from "../common/Input";
+import Button from "../common/Button";
 
 export const LoginForm = () => {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
-  const { login } = useAuthStore()
-  
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { login } = useAuthStore();
+
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-    setError('')
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError("");
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-      const loginResponse = await authAPI.login(formData)
-      const { access, refresh } = loginResponse.data
-      
-      const profileResponse = await authAPI.getProfile()
-      const user = profileResponse.data
-      
-      login(user, access, refresh)
-      navigate('/dashboard')
+      const loginResponse = await authAPI.login(formData);
+      const { access, refresh } = loginResponse.data;
+
+      // Save tokens FIRST
+      useAuthStore.getState().setTokens(access, refresh);
+
+      // Now fetch profile
+      const profileResponse = await authAPI.getProfile();
+      const user = profileResponse.data;
+
+      // Save user
+      useAuthStore.getState().setUser(user);
+
+      // Finally mark authenticated
+      login(user, access, refresh);
+
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.detail || 'Login failed. Please try again.')
+      setError(err.response?.data?.detail || "Login failed. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <motion.form
@@ -64,7 +73,7 @@ export const LoginForm = () => {
       )}
 
       <Input
-        label={t('auth.email')}
+        label={t("auth.email")}
         type="email"
         name="email"
         placeholder="farmer@example.com"
@@ -75,7 +84,7 @@ export const LoginForm = () => {
       />
 
       <Input
-        label={t('auth.password')}
+        label={t("auth.password")}
         type="password"
         name="password"
         placeholder="••••••••"
@@ -86,31 +95,33 @@ export const LoginForm = () => {
       />
 
       <div className="flex items-center justify-between">
-        <Link 
+        <Link
           to="/forgot-password"
           className="text-sm text-emerald-600 hover:text-emerald-700"
         >
-          {t('auth.forgotPassword')}
+          {t("auth.forgotPassword")}
         </Link>
       </div>
 
-      <Button 
-        type="submit" 
-        fullWidth 
-        size="lg"
-        loading={loading}
-      >
-        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('auth.login')}
+      <Button type="submit" fullWidth size="lg" loading={loading}>
+        {loading ? (
+          <Loader2 className="w-5 h-5 animate-spin" />
+        ) : (
+          t("auth.login")
+        )}
       </Button>
 
       <p className="text-center text-gray-600">
-        {t('auth.noAccount')}{' '}
-        <Link to="/register" className="text-emerald-600 font-semibold hover:text-emerald-700">
-          {t('auth.register')}
+        {t("auth.noAccount")}{" "}
+        <Link
+          to="/register"
+          className="text-emerald-600 font-semibold hover:text-emerald-700"
+        >
+          {t("auth.register")}
         </Link>
       </p>
     </motion.form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
