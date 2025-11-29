@@ -1,5 +1,15 @@
 export const translations = {
   EN: {
+    weight_in_kg: "kg",
+    select_note: "Any additional notes...",
+    select_weight: "e.g., 500",
+    select_location: "Select location",
+    select_storage: "Select storage",
+    text1: "Track all your crop batches in one place",
+    text2: "Get early warnings about potential risks",
+    text3: "Earn achievements as you protect crops",
+    text4: "Works offline - sync when connected",
+    login_message: "Welcome back! Please enter your details.",
     ctasection: {
       title: "Ready to Protect Your Harvest?",
       description:
@@ -7,6 +17,7 @@ export const translations = {
       bottom:
         "No credit card required • Works on any device • Available offline",
     },
+    start_adding_crops: "Start by adding your first crop batch",
     app: {
       name: "HarvestGuard",
       tagline: "Protect Your Harvest, Secure Your Future",
@@ -17,7 +28,7 @@ export const translations = {
         title: "Minimize Loss, Maximize Gain",
         subtitle:
           "Bangladesh loses 14% of its food production annually. HarvestGuard helps you protect every grain.",
-        cta: "Start Protecting Now",
+        cta: "Start Protecting Now -->",
         stats: {
           loss: "14% Food Lost",
           farmers: "30M+ Farmers Affected",
@@ -86,6 +97,7 @@ export const translations = {
     },
     auth: {
       login: "Login",
+      login_message: "Welcome back! Please enter your details.",
       register: "Register",
       register_bottom: "Start protecting your harvest today",
       email: "Email Address",
@@ -101,6 +113,8 @@ export const translations = {
       registerSuccess: "Account created successfully!",
     },
     dashboard: {
+      welcome_message: "Here's how your harvest is doing today",
+      manage: "Manage all your crop batches",
       welcome: "Welcome",
       overview: "Overview",
       totalBatches: "Total Batches",
@@ -178,7 +192,9 @@ export const translations = {
       },
     },
     achievements: {
+      description: "Earn badges by protecting your harvest",
       title: "My Achievements",
+      unlocked: "achievements Unlocked",
       noAchievements: "No achievements yet. Keep protecting your crops!",
       earnedOn: "Earned on",
       badges: {
@@ -236,6 +252,16 @@ export const translations = {
   },
 
   BN: {
+    weight_in_kg: "কেজি",
+    select_note: "অন্যান্য নোট...",
+    select_weight: "যেমন: ৫০০",
+    select_location: "স্থান নির্বাচন করুন",
+    select_storage: "গুদাম নির্বাচন করুন",
+    text1: "একই জায়গায় আপনার সব ফসলের ব্যাচ ট্র্যাক করুন",
+    text2: "সম্ভাব্য ঝুঁকি সম্পর্কে আগাম সতর্কতা পান",
+    text3: "ফসল রক্ষা করার সাথে সাথে অর্জন করুন",
+    text4: "অফলাইনে কাজ করে - সংযোগ থাকলে সিঙ্ক হয়",
+    login_message: "ফিরে আসার জন্য স্বাগতম! দয়া করে আপনার তথ্য দিন।.",
     ctasection: {
       title: "ফসল সুরক্ষা শুরু করতে প্রস্তুত?",
       description:
@@ -243,6 +269,7 @@ export const translations = {
       bottom:
         "কোনো ক্রেডিট কার্ডের প্রয়োজন নেই • যেকোনো ডিভাইসে চলে • ইন্টারনেট ছাড়াই কাজ করে",
     },
+    start_adding_crops: "আপনার প্রথম ফসলের ব্যাচটি যোগ করে শুরু করুন।",
     app: {
       name: "হার্ভেস্টগার্ড",
       tagline: "আপনার ফসল রক্ষা করুন, ভবিষ্যত সুরক্ষিত করুন",
@@ -253,7 +280,7 @@ export const translations = {
         title: "ক্ষতি কমান, আয় বাড়ান",
         subtitle:
           "বাংলাদেশে প্রতি বছর ১৪% খাদ্য নষ্ট হয়। হার্ভেস্টগার্ড আপনাকে ফসল বাঁচাতে সাহায্য করে।",
-        cta: "এখনই শুরু করুন",
+        cta: "এখনই শুরু করুন -->",
         stats: {
           loss: "১৪% খাদ্য নষ্ট",
           farmers: "৩ কোটি+ কৃষক প্রভাবিত",
@@ -337,6 +364,8 @@ export const translations = {
       registerSuccess: "অ্যাকাউন্ট তৈরি হয়েছে!",
     },
     dashboard: {
+      welcome_message: "আজকে আপনার ফসলের অবস্থা কেমন",
+      manage: "আপনার সব ফসলের ব্যাচ পরিচালনা করুন",
       welcome: "স্বাগতম",
       overview: "সংক্ষেপ",
       totalBatches: "মোট ব্যাচ",
@@ -414,6 +443,8 @@ export const translations = {
       },
     },
     achievements: {
+      description: "আপনার ফসল রক্ষা করে ব্যাজ অর্জন করুন",
+      unlocked: "অর্জন তালিকা",
       title: "অর্জন",
       noAchievements: "এখনও কোনো অর্জন নেই।",
       earnedOn: "তারিখ",

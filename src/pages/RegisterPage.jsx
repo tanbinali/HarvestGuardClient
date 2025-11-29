@@ -5,18 +5,18 @@ import RegisterForm from "../components/auth/RegisterForm";
 import { LanguageToggle } from "../components/common/LanguageToggle";
 import useTranslation from "../hooks/useTranslation";
 
-const benefits = [
-  { key: "track", text: "Track all your crop batches in one place" },
-  { key: "alert", text: "Get early warnings about potential risks" },
-  { key: "achieve", text: "Earn achievements as you protect crops" },
-  { key: "offline", text: "Works offline - sync when connected" },
-];
-
 export const RegisterPage = () => {
   const { t } = useTranslation();
+  const benefits = [
+    { key: "track", text: t("text1") },
+    { key: "alert", text: t("text2") },
+    { key: "achieve", text: t("text3") },
+    { key: "offline", text: t("text4") },
+  ];
 
   return (
     <div className="min-h-screen flex">
+      {/* Left Side */}
       <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-emerald-600 via-green-600 to-emerald-700 relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-5"
@@ -55,9 +55,13 @@ export const RegisterPage = () => {
             transition={{ delay: 0.3 }}
             className="text-center"
           >
-            <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-8">
-              <Wheat className="w-10 h-10 text-white" />
-            </div>
+            {/* ✅ CLICKABLE LOGO TO HOME PAGE */}
+            <Link to="/" className="block w-20 h-20 mx-auto mb-8">
+              <div className="w-full h-full bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                <Wheat className="w-10 h-10 text-white" />
+              </div>
+            </Link>
+
             <h1 className="text-4xl font-bold mb-4">{t("app.name")}</h1>
             <p className="text-xl text-white/80 max-w-md mb-8">
               {t("app.tagline")}
@@ -83,6 +87,7 @@ export const RegisterPage = () => {
         </div>
       </div>
 
+      {/* Right Side */}
       <div className="w-full lg:w-1/2 flex flex-col min-h-screen">
         <div className="flex items-center justify-between p-6">
           <Link to="/" className="flex items-center gap-2 lg:hidden">

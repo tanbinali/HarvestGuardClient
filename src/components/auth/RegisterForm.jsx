@@ -171,8 +171,8 @@ export const RegisterForm = () => {
             <Input
               label={t("auth.firstName")}
               type="text"
-              name="first_name"
-              placeholder="First name"
+              name={t("firstName")}
+              placeholder={t("auth.firstName")}
               value={formData.first_name}
               onChange={handleChange}
               icon={User}
@@ -182,7 +182,7 @@ export const RegisterForm = () => {
               label={t("auth.lastName")}
               type="text"
               name="last_name"
-              placeholder="Last name"
+              placeholder={t("auth.lastName")}
               value={formData.last_name}
               onChange={handleChange}
               required
@@ -264,12 +264,9 @@ export const RegisterForm = () => {
             >
               {t("common.back")}
             </Button>
+
             <Button type="submit" fullWidth size="lg" loading={loading}>
-              {loading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                t("auth.register")
-              )}
+              {t("auth.register")}
             </Button>
           </div>
         </motion.div>

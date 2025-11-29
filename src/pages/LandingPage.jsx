@@ -1,19 +1,39 @@
-import { motion } from 'framer-motion'
-import HeroSection from '../components/landing/HeroSection'
-import ProblemSection from '../components/landing/ProblemSection'
-import SolutionSection from '../components/landing/SolutionSection'
-import FeaturesSection from '../components/landing/FeaturesSection'
-import CTASection from '../components/landing/CTASection'
-import { LanguageToggle } from '../components/common/LanguageToggle'
-import { Wheat } from 'lucide-react'
-import useTranslation from '../hooks/useTranslation'
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import HeroSection from "../components/landing/HeroSection";
+import ProblemSection from "../components/landing/ProblemSection";
+import SolutionSection from "../components/landing/SolutionSection";
+import FeaturesSection from "../components/landing/FeaturesSection";
+import CTASection from "../components/landing/CTASection";
+import { LanguageToggle } from "../components/common/LanguageToggle";
+import { Wheat } from "lucide-react";
+import useTranslation from "../hooks/useTranslation";
 
 export const LandingPage = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup function
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="min-h-screen">
-      <header className="fixed top-0 left-0 right-0 z-50">
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-white shadow-lg border-b border-gray-200"
+            : "bg-transparent"
+        }`}
+      >
         <div className="container mx-auto px-4 py-4">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -21,12 +41,26 @@ export const LandingPage = () => {
             className="flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+              <div
+                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                  scrolled ? "bg-emerald-500" : "bg-white/20 backdrop-blur-sm"
+                }`}
+              >
                 <Wheat className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-xl text-white">{t('app.name')}</span>
+              <span
+                className={`font-bold text-xl transition-all ${
+                  scrolled ? "text-gray-900" : "text-white"
+                }`}
+              >
+                {t("app.name")}
+              </span>
             </div>
-            <LanguageToggle />
+
+            {/* Force dark appearance when scrolled */}
+            <div className={scrolled ? "brightness-0" : ""}>
+              <LanguageToggle />
+            </div>
           </motion.div>
         </div>
       </header>
@@ -43,18 +77,16 @@ export const LandingPage = () => {
             <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
               <Wheat className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-xl">{t('app.name')}</span>
+            <span className="font-bold text-xl">{t("app.name")}</span>
           </div>
-          <p className="text-gray-400 text-sm">
-            {t('app.tagline')}
-          </p>
+          <p className="text-gray-400 text-sm">{t("app.tagline")}</p>
           <p className="text-gray-500 text-xs mt-4">
             © {new Date().getFullYear()} HarvestGuard. All rights reserved.
           </p>
         </div>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default LandingPage
+export default LandingPage;

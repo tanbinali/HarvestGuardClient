@@ -48,9 +48,13 @@ export const LoginPage = () => {
             transition={{ delay: 0.3 }}
             className="text-center"
           >
-            <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-8">
-              <Wheat className="w-10 h-10 text-white" />
-            </div>
+            {/* ✅ CLICKABLE LOGO TO HOME PAGE */}
+            <Link to="/" className="block w-20 h-20 mx-auto mb-8">
+              <div className="w-full h-full bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                <Wheat className="w-10 h-10 text-white" />
+              </div>
+            </Link>
+
             <h1 className="text-4xl font-bold mb-4">{t("app.name")}</h1>
             <p className="text-xl text-white/80 max-w-md">{t("app.tagline")}</p>
           </motion.div>
@@ -80,11 +84,8 @@ export const LoginPage = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
                 {t("auth.login")}
               </h2>
-              <p className="text-gray-600">
-                Welcome back! Please enter your details.
-              </p>
+              <p className="text-gray-600">{t("login_message")}</p>
             </div>
-
             <LoginForm />
           </motion.div>
         </div>

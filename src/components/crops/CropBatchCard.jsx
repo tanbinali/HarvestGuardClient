@@ -35,7 +35,9 @@ export const CropBatchCard = ({ batch, onDelete }) => {
             <h3 className="font-bold text-gray-900">
               {t(`crops.types.${batch.crop_type}`)}
             </h3>
-            <p className="text-sm text-gray-500">{batch.estimated_weight} kg</p>
+            <p className="text-sm text-gray-500">
+              {batch.estimated_weight} {t("weight_in_kg")}
+            </p>
           </div>
         </div>
         <span

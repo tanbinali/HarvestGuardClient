@@ -104,11 +104,7 @@ export const LoginForm = () => {
       </div>
 
       <Button type="submit" fullWidth size="lg" loading={loading}>
-        {loading ? (
-          <Loader2 className="w-5 h-5 animate-spin" />
-        ) : (
-          t("auth.login")
-        )}
+        {t("auth.login")}
       </Button>
 
       <p className="text-center text-gray-600">

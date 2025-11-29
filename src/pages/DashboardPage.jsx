@@ -67,9 +67,10 @@ export const DashboardPage = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
           {t("dashboard.welcome")}, {user?.first_name || "Farmer"}! 👋
         </h1>
-        <p className="text-gray-600">Here's how your harvest is doing today</p>
+        <p className="text-gray-600">{t("dashboard.welcome_message")}</p>
       </motion.div>
 
+      {/* Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatsCard
           title={t("dashboard.totalBatches")}
@@ -97,11 +98,10 @@ export const DashboardPage = () => {
         />
       </div>
 
-      <div className="mb-8">
-        <QuickActions />
-      </div>
+      <QuickActions />
 
       <div className="grid lg:grid-cols-2 gap-8">
+        {/* Recent Batches */}
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-900">
@@ -122,6 +122,7 @@ export const DashboardPage = () => {
           )}
         </div>
 
+        {/* Achievements */}
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-900">

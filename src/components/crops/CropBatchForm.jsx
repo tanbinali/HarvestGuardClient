@@ -123,7 +123,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
         label={t("crops.weight")}
         type="number"
         name="estimated_weight"
-        placeholder="e.g., 500"
+        placeholder={t("select_weight")}
         value={formData.estimated_weight}
         onChange={handleChange}
         icon={Scale}
@@ -148,7 +148,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
         value={formData.storage_location}
         onChange={handleChange}
         options={locations}
-        placeholder="Select location"
+        placeholder={t("select_location")}
         icon={MapPin}
         required
       />
@@ -159,7 +159,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
         value={formData.storage_type}
         onChange={handleChange}
         options={storageTypes}
-        placeholder="Select storage type"
+        placeholder={t("select_storage")}
         icon={Package}
         required
       />
@@ -168,7 +168,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
         label={t("crops.notes")}
         type="text"
         name="notes"
-        placeholder="Any additional notes..."
+        placeholder={t("select_note")}
         value={formData.notes}
         onChange={handleChange}
       />
@@ -183,11 +183,7 @@ export const CropBatchForm = ({ initialData, onSuccess }) => {
           {t("common.cancel")}
         </Button>
         <Button type="submit" fullWidth loading={loading}>
-          {loading ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
-          ) : (
-            t("common.save")
-          )}
+          {t("common.save")}
         </Button>
       </div>
     </motion.form>

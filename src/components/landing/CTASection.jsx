@@ -58,7 +58,6 @@ export const CTASection = () => {
               className="bg-white text-emerald-700 hover:bg-emerald-50 shadow-xl"
             >
               {t("landing.hero.cta")}
-              <ArrowRight className="w-5 h-5" />
             </Button>
             <Button
               variant="outline"

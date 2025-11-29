@@ -64,9 +64,7 @@ export const AchievementsPage = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
           {t("achievements.title")}
         </h1>
-        <p className="text-gray-600">
-          Earn badges by protecting your harvest and using HarvestGuard features
-        </p>
+        <p className="text-gray-600">{t("achievements.description")}</p>
       </motion.div>
 
       <motion.div
@@ -82,7 +80,7 @@ export const AchievementsPage = () => {
             <p className="text-3xl font-bold">
               {earnedBadges.length} / {allBadges.length}
             </p>
-            <p className="text-white/80">Achievements Unlocked</p>
+            <p className="text-white/80">{t("achievements.unlocked")}</p>
           </div>
         </div>
       </motion.div>

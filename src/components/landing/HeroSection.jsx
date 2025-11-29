@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Leaf, Shield, TrendingDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import useTranslation from "../../hooks/useTranslation";
 import Button from "../common/Button";
+import { TrendingDown, Shield, DollarSign, Leaf } from "lucide-react";
 
 const FloatingLeaf = ({ delay, x, duration }) => (
   <motion.div
@@ -40,7 +40,7 @@ export const HeroSection = () => {
       color: "text-amber-400",
     },
     {
-      icon: Leaf,
+      icon: DollarSign,
       value: t("landing.hero.stats.value"),
       color: "text-emerald-400",
     },
@@ -110,15 +110,15 @@ export const HeroSection = () => {
           <Button
             size="xl"
             onClick={() => navigate("/register")}
-            className="bg-white text-emerald-700 hover:bg-emerald-50"
+            className="bg-white text-emerald-700 hover:bg-emerald-50 flex items-center gap-2 shadow-lg hover:shadow-xl transition-all"
           >
             {t("landing.hero.cta")}
-            <ArrowRight className="w-5 h-5" />
           </Button>
           <Button
             variant="outline"
             size="xl"
             onClick={() => navigate("/login")}
+            className="flex items-center gap-2 border-2 border-white text-white hover:bg-white hover:text-emerald-700 transition-all"
           >
             {t("auth.login")}
           </Button>
